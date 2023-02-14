@@ -1,0 +1,120 @@
+version: "2.1"
+services:
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    hostname: sonarr
+    environment:
+      - PUID=0
+      - PGID=0
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ${CONFIG_HOME}/sonarr/config:/config
+      - ${MOUNT_HOME}/Series:/tv
+      - ${MOUNT_HOME}/Downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    hostname: radarr
+    container_name: radarr
+    environment:
+      - PUID=0
+      - PGID=0
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ${CONFIG_HOME}/radarr/config:/config
+      - ${MOUNT_HOME}/Peliculas:/movies
+      - ${MOUNT_HOME}/Downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    depends_on:
+      - sonarr
+
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    hostname: plex
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - VERSION=docker  
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ${CONFIG_HOME}/plex/config:/config
+      - ${MOUNT_HOME}/Series:/tv
+      - ${MOUNT_HOME}/Peliculas:/movies
+    ports:
+      - 32400:32400/tcp
+      - 3005:3005/tcp
+      - 8324:8324/tcp
+      - 32469:32469/tcp
+      - 1900:1900/udp
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+    restart: unless-stopped
+    network_mode: "host"
+    depends_on:
+
+      - sonarr
+      - radarr
+      
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    hostname: qbitorrent
+    container_name: qbittorrent
+    environment:
+      - PUID=0
+      - PGID=0
+      - WEBUI_PORT=8080
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ${CONFIG_HOME}/qbittorrent/config:/config
+      - ${MOUNT_HOME}/Downloads:/downloads
+    ports:
+      - 6881:6881/tcp
+      - 6881:6881/udp
+      - 8080:8080
+    restart: unless-stopped
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    hostname: bazarr
+    container_name: bazarr
+    environment:
+      - PUID=0
+      - PGID=0
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ${CONFIG_HOME}/bazarr/config:/config
+      - ${MOUNT_HOME}/Peliculas:/movies
+      - ${MOUNT_HOME}/Series:/tv
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    hostname: prowlarr
+    environment:
+      - PUID=0
+      - PGID=0
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ${CONFIG_HOME}/prowlarr/config:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
