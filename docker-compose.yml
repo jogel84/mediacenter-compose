@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
 
   radarr:
-    image: lscr.io/linuxserver/radarr:latest
+    image: linuxserver/radarr:latest
     hostname: radarr
     container_name: radarr
     environment:
@@ -38,7 +38,7 @@ services:
       - sonarr
 
   plex:
-    image: lscr.io/linuxserver/plex:latest
+    image: linuxserver/plex:latest
     container_name: plex
     hostname: plex
     environment:
@@ -68,7 +68,7 @@ services:
       - radarr
       
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
+    image: linuxserver/qbittorrent:latest
     hostname: qbitorrent
     container_name: qbittorrent
     environment:
@@ -87,7 +87,7 @@ services:
     restart: unless-stopped
 
   bazarr:
-    image: lscr.io/linuxserver/bazarr:latest
+    image: linuxserver/bazarr:latest
     hostname: bazarr
     container_name: bazarr
     environment:
@@ -104,7 +104,7 @@ services:
     restart: unless-stopped
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
+    image: linuxserver/prowlarr:latest
     container_name: prowlarr
     hostname: prowlarr
     environment:
