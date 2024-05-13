@@ -1,6 +1,6 @@
 services:
   sonarr:
-    image: linuxserver/sonarr:latest
+    image: linuxserver/sonarr:${CONTAINER_SONARR_VERSION}
     container_name: sonarr
     hostname: sonarr
     environment:
@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
 
   radarr:
-    image: linuxserver/radarr:latest
+    image: linuxserver/radarr:${CONTAINER_RADARR_VERSION}
     hostname: radarr
     container_name: radarr
     environment:
@@ -36,7 +36,7 @@ services:
       - sonarr
 
   plex:
-    image: linuxserver/plex:latest
+    image: linuxserver/plex:${CONTAINER_PLEX_VERSION}
     container_name: plex
     hostname: plex
     environment:
@@ -66,7 +66,7 @@ services:
       - radarr
       
   qbittorrent:
-    image: linuxserver/qbittorrent:latest
+    image: linuxserver/qbittorrent:${CONTAINER_QBITORRENT_VERSION}
     hostname: qbitorrent
     container_name: qbittorrent
     environment:
@@ -85,7 +85,7 @@ services:
     restart: unless-stopped
 
   bazarr:
-    image: linuxserver/bazarr:latest
+    image: linuxserver/bazarr:${CONTAINER_BAZARR_VERSION}
     hostname: bazarr
     container_name: bazarr
     environment:
@@ -102,7 +102,7 @@ services:
     restart: unless-stopped
 
   prowlarr:
-    image: linuxserver/prowlarr:latest
+    image: linuxserver/prowlarr:${CONTAINER_PROWLARR_VERSION}
     container_name: prowlarr
     hostname: prowlarr
     environment:
@@ -117,7 +117,7 @@ services:
     restart: unless-stopped
 
   flaresolverr:
-    image: flaresolverr/flaresolverr:latest
+    image: flaresolverr/flaresolverr:${CONTAINER_FLARESOLVERR_VERSION}
     container_name: flaresolverr
     environment:
       - LOG_LEVEL=info
