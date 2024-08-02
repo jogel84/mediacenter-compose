@@ -120,11 +120,11 @@ services:
     image: flaresolverr/flaresolverr:${CONTAINER_FLARESOLVERR_VERSION}
     container_name: flaresolverr
     environment:
-      - LOG_LEVEL=info
-      - LOG_HTML=false
-      - CAPTCHA_SOLVER=none
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
     ports:
-      - 8191:8191
+      - "${PORT:-8191}:8191"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
